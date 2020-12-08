@@ -55,7 +55,7 @@ def load_a_pointcloud(basedir, capture_date, frame_id):
 
 def load_label_2d_at_an_image(basedir, capture_date, camera_name, frame_id, track_ids=None):
     if track_ids is None:
-        fns = glob.glob(os.path.join(basedir, 'labels/2d', capture_date, camera_name, 
+        fns = glob.glob(os.path.join(basedir, 'labels/2d', capture_date, 
             '{}_{}_{:07d}_*.json'.format(capture_date, camera_name, frame_id)))
         track_ids = [fn.split('_')[-1].split('.')[0] for fn in fns]
     elif type(track_ids) is not list:
@@ -64,7 +64,7 @@ def load_label_2d_at_an_image(basedir, capture_date, camera_name, frame_id, trac
     for tid in track_ids:
         ext = 'json'
         frame_key = '{}_{}_{:07d}_{}'.format(capture_date, camera_name, frame_id, tid)
-        fn = os.path.join(basedir, 'labels/2d', capture_date, camera_name, '{}.{}'.format(frame_key, ext))
+        fn = os.path.join(basedir, 'labels/2d', capture_date, '{}.{}'.format(frame_key, ext))
         if os.path.exists(fn):
             labels[tid] = json.load(open(fn,'r'))
     return labels

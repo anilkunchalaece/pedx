@@ -3,6 +3,7 @@ import random
 import cv2
 import numpy as np
 import pedx.data_loader as dl
+import json
 
 def generate_a_random_color(dtype):
     if dtype == np.uint8:
@@ -13,7 +14,26 @@ def generate_a_random_color(dtype):
 
 def draw_a_skeleton(image, points, color=None):
     if color is None: color = generate_a_random_color(np.uint8)
-    print('draw_a_skeleton not implemented yet')
+    # print('draw_a_skeleton not implemented yet')
+    # print(points)
+    
+    # add point for the keypoints
+    for k in points :
+        x = points[k]['x']
+        y = points[k]['y']
+        cv2.circle(image, (x,y), radius=5, color=generate_a_random_color(np.uint8), thickness=2)
+    
+    # add lines for 18 keypoints -> 16 Joints
+    # load joints
+    with open("joints.json") as fd :
+        joints = json.load(fd)
+
+    # draw joints
+    for j in joints :
+        start_p = ( points[j[0]]['x'] , points[j[0]]['y'] )
+        end_p = ( points[j[1]]['x'] , points[j[1]]['y'] )
+        cv2.line(image, start_p, end_p, generate_a_random_color(np.uint8), 2)
+
     return image
 
 def draw_a_polygon(image, polygon, color=None):
@@ -67,7 +87,7 @@ def draw_2d_labels_at_an_image(
         if d['category'] == 'pedestrian':
             text_str = tid[-4:]
             if d['keypoint'] is not None:
-                # image = draw_a_skeleton(image, keypoints)
+                image = draw_a_skeleton(image, d['keypoint'])
                 if text_loc is None:
                     pts = [[v['x'],v['y']] for v in d['keypoint'].values()]
                     text_loc = tuple(np.min(kpts, axis=0))

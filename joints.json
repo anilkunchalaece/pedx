@@ -1,0 +1,18 @@
+[
+    ["reye", "leye"],
+    ["head", "nose"],
+    ["nose", "mouth"],
+    ["mouth", "neck"],
+    ["neck", "lsho"],
+    ["neck", "rsho"],
+    ["lsho", "lelb"],
+    ["lelb", "lwri"],
+    ["rsho", "relb"],
+    ["relb", "rwri"],
+    ["neck", "lhip"],
+    ["neck", "rhip"],
+    ["lhip", "lknee"],
+    ["lknee", "lankl"],
+    ["rhip", "rknee"],
+    ["rknee", "rankl"]
+]
